@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <style>
+        .border,
+        h3,
+        h1,
+        a {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        function Rjson() {
+            //read jsonfile
+            fetch('oder.json').then((response) => response.json()).then((json) => {
+                console.log(json);
+                img();
+                txt(json);
+                oder(json);
+            });
+        }
+
+        function img() {
+            console.log(location.hash.split('#')[1]);
+            document.getElementById('img').innerHTML = '<img width="100%" src="' + location.hash.split('#')[1] + '.jpg">';
+        }
+
+        function txt(data) {
+            pc = 0;
+            sc = 0;
+            c = 0;
+            for (loop in data) {
+                if (loop != 0) {
+                    //console.log(data[loop].pineapple_cake)
+                    pc = pc + Number(data[loop].pineapple_cake);
+                    sc = sc + Number(data[loop].sun_cake);
+                    c = c + Number(data[loop].cookie);
+                }
+            }
+            if (location.hash.split('#')[1] == 'pineapple_cake') {
+                i = '鳳梨酥';
+                p = data[0].pineapple_cake;
+                t = pc;
+            } else if (location.hash.split('#')[1] == "sun_cake") {
+                i = '太陽餅';
+                p = data[0].sun_cake;
+                t = sc;
+            } else if (location.hash.split('#')[1] == 'cookie') {
+                i = '餅乾盒';
+                p = data[0].cookie;
+                t = c;
+            }
+            document.getElementById('txt').innerHTML = '<h1>' + i + ' 售價: ' + p + '</h1><p></p><h1>總訂購量:' + t + '</h1>';
+        }
+
+        function oder(data) {
+            i = '';
+            for (loop in data) {
+                if (location.hash.split('#')[1] == 'pineapple_cake') {
+                    n = data[loop].pineapple_cake;
+                } else if (location.hash.split('#')[1] == "sun_cake") {
+                    n = data[loop].sun_cake;
+                } else if (location.hash.split('#')[1] == 'cookie') {
+                    n = data[loop].cookie;
+                }
+                if (loop != 0 && n != 0) {
+                    i = i + '<a href="oder.html#' + loop + '" class="row border border-primary"><div class="col-4">訂單編號: ' + loop + '</div><div class="col-4">訂購人: ' + data[loop].name + '</div><div class="col-4">訂購數: ' + n + '</div></a><p></p>'
+                }
+            }
+            document.getElementById('oder').innerHTML = i
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="overview.html">
+                    首頁
+                </a>
+            </div>
+        </nav>
+
+        <div id="img" class="col"></div>
+        <p></p>
+        <div id="txt"></div>
+        <p>
+            <p></p>
+        </p>
+        <div id="oder"></div>
+    </div>
+</body>
+<script>
+    Rjson();
+</script>
+
+</html>

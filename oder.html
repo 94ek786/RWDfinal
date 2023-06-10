@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script>
+        function Rjson() {
+            //read jsonfile
+            fetch('oder.json').then((response) => response.json()).then((json) => {
+                i = location.hash.split('#')[1]
+                console.log(json);
+                con(json[i], json[0]);
+            });
+        }
+
+        function con(i, p) {
+            tp = Number(i.pineapple_cake) * Number(p.pineapple_cake) + Number(i.sun_cake) * Number(p.sun_cake) + Number(i.cookie) * Number(p.cookie);
+            document.getElementById('i').innerHTML = '\
+                <div class="row">\
+                    <div class="col-md-3 border border-dark">姓名:' + i.name + '</div>\
+                    <div class="col-md-3 border border-dark">電話:' + i.phone + '</div>\
+                    <div class="col-md-3 border border-dark">地址:' + i.address + '</div>\
+                    <div class="col-md-3 border border-dark">預付金額:' + i.pay + '</div>\
+                </div>\
+                <div class="row">\
+                    <div class="col-md-3 border border-dark">鳳梨酥訂購數:' + i.pineapple_cake + '</div>\
+                    <div class="col-md-3 border border-dark">太陽餅訂購數:' + i.sun_cake + '</div>\
+                    <div class="col-md-3 border border-dark">餅乾盒訂購數:' + i.cookie + '</div>\
+                    <div class="col-md-3 border border-dark">總額:' + tp + '</div>\
+                </div><p><p><button onclick="history.go(-1);" class="btn btn-dark col-md-1">返回</button>';
+            //<div class="row"><button onclick="page(1);" class="btn btn-dark col-md-1">上一筆訂單</button><div class="col-10"></div><button class="btn btn-dark col-md-1">下一筆訂單</button></div>
+        }
+
+        function page(i) {
+            window.location.assign('oder_detail.html#' + (Number(location.hash.split('#')[1]) - 1));
+        }
+    </script>
+    <style>
+        .border {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="overview.html">
+                    首頁
+                </a>
+            </div>
+        </nav>
+
+        <div id="i"></div>
+    </div>
+</body>
+<script>
+    Rjson();
+</script>
+
+</html>
